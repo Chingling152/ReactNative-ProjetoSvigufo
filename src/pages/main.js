@@ -1,21 +1,24 @@
 import React from 'react';
-import {Text , Image , StyleSheet} from 'react-native'
+import {Text , Image } from 'react-native'
+import { DefaultStyleSheet } from '../assets/estilizacao/padrao';
+import { TokenValido } from '../services/autenticacao';
 
-class Main extends React.Component{
+class Eventos extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            listaEventos:[
-                {
-                    id: 1,
-                    titulo:"teste"
-                }
-            ]
+            listaEventos:[]
         }
     }
 
     componentDidMount(){
-        this.carregarEventos();
+        TokenValido().then(valido => {
+                if(valido){
+                    this.carregarEventos();
+                }
+            }
+        ).catch(error => console.warn(error));
+        
     }
 
     carregarEventos = async () => {
@@ -25,8 +28,8 @@ class Main extends React.Component{
     static navigationOptions = {
         tabBarIcon : ({tintColor}) => (
             <Image
-                source={require("../assets/img/calendar.png")}
-                style={styles.tabNavigatorIconHome}
+                source={require("../assets/img/tabBarIcons/calendar.png")}
+                style={DefaultStyleSheet.tabBarIcon}
             />
         )
     };
@@ -37,14 +40,4 @@ class Main extends React.Component{
     }
 }
 
-const styles= StyleSheet.create(
-    {
-        tabNavigatorIconHome: {
-            width:25,
-            height:25,
-            tintColor:'#FFFFFF'
-        }
-    }
-)
-
-export default Main;
+export default Eventos;
