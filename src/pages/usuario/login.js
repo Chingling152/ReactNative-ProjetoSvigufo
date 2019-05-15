@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ImageBackground, View, TextInput, TouchableOpacity, Image ,CheckBox} from 'react-native'
-import { DefaultStyleSheet, DefaultFormStyles, DefaultFeedbackStyles } from '../../assets/estilizacao/padrao';
+import { 
+    Text, 
+    StyleSheet, 
+    ImageBackground, 
+    View, 
+    TextInput, 
+    TouchableOpacity, 
+    Image ,
+    CheckBox,
+    ActivityIndicator
+} from 'react-native'
+import { DefaultFormStyles, DefaultFeedbackStyles } from '../../assets/estilizacao/padrao';
 import { ApiRequest } from '../../services/api';
 import { TokenValido} from '../../services/autenticacao';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,7 +30,8 @@ class Login extends Component {
             email:"",
             senha:"",
             erro:"",
-            lembrar:false
+            lembrar:false,
+            carregando:false
         }
     }
 
@@ -70,6 +81,7 @@ class Login extends Component {
     _realizarLogin = async () => {
         if(this.state.email.length == 0)this.setState({erro:"E email é obrigatorio"})
         if(this.state.senha.length == 0)this.setState({erro:"A senha é obrigatoria"})
+        this.setState({carregando:true})
         await ApiRequest("Usuarios/login")
             .Cadastrar({
                 email:this.state.email,
@@ -96,7 +108,7 @@ class Login extends Component {
                         default:
                             break;
                     }
-                    
+                    this.setState({carregando:false})
                 }
             )
             .catch(erro => console.warn(erro))
@@ -109,7 +121,7 @@ class Login extends Component {
                 style={StyleSheet.absoluteFillObject}
             >
                 <View style={styles.overlay} />
-                <View style={DefaultStyleSheet.mainContent}>
+                <View style={DefaultFormStyles.mainForm}>
                     <Image
                         source={require("../../assets/img/login/loginIcon2x.png")}
                         style={styles.imagemLogin}
@@ -135,7 +147,7 @@ class Login extends Component {
                         textContentType ="password"
                     />
                     <TouchableOpacity
-                        style={styles.lightSubmitButton}
+                        style={styles.btnLogin}
                         onPress={this._realizarLogin}
                     >
                         <Text style={DefaultFormStyles.submitButtonText}>LOGIN</Text>
@@ -150,6 +162,7 @@ class Login extends Component {
                         }
                     />
                     <Text style={DefaultFeedbackStyles.errorMessage}>{this.state.erro}</Text>
+                    <ActivityIndicator size="large" color="#FFFFFF" animating={this.state.carregando} />
                 </View>
             </ImageBackground>
         );

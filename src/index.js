@@ -70,7 +70,7 @@ const AdminNavigator = createStackNavigator({
         },
     }
 },{
-    initialRouteName:"Inicio"
+    initialRouteName:"Admin - Inicio"
 });
 
 export default createAppContainer(

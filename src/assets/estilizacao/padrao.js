@@ -7,11 +7,9 @@ export const DefaultStyleSheet = StyleSheet.create(
             height:25,
             tintColor:'white'
         },
-
         mainContent:{
             width: "100%",
             height: "100%",
-            justifyContent: "center",
             alignContent: "center",
             alignItems: "center"
         }
@@ -20,6 +18,13 @@ export const DefaultStyleSheet = StyleSheet.create(
 
 export const DefaultFormStyles = StyleSheet.create(
     {
+        mainForm:{
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center"
+        },
         submitButton:{
             height: 38,
             shadowColor: "rgba(0,0,0, 0.4)", // IOS
@@ -71,6 +76,15 @@ export const DefaultFeedbackStyles = StyleSheet.create(
 
 export const DefaultTextStyles = StyleSheet.create(
     {
+        tituloPadrao:{
+            marginVertical:15,
+            textAlign:'center',
+            //color:"#B727FF",
+            //borderBottomColor:"#B727FF",
+            letterSpacing: 4,
+            alignSelf:'center',
+            fontWeight:'600',
+        },
         enfaseText:{
 
         },
